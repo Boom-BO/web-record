@@ -8,7 +8,8 @@ npm run build
 
 # 进入生成的文件夹
 cd ./dist
-
+# 解决history模式部署后的刷新404问题
+cp index.html 404.html
 # 如果是发布到自定义域名
 # echo 'www.example.com' > CNAME
 

@@ -4,7 +4,7 @@
 		<div class="app-card" v-for="(item, index) in htmlData" :key="index">
 			<el-card :body-style="{ padding: '0px' }" @click="jump(item.url)">
 				<div class="image">
-					<img :src="getAssetsImages(item.name)" />
+					<img :src="getAssetsFile(`htmls/${item.name || 'default'}.png`)" />
 				</div>
 				<div class="bottom">
 					<p class="title" :title="item.name">{{ item.name }}</p>
@@ -19,10 +19,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, toRefs, onMounted, nextTick, onUnmounted } from 'vue'
+import { ref, reactive, toRefs, onMounted, onUnmounted } from 'vue'
 import { debounce } from 'lodash'
-import { ElLoading } from 'element-plus'
+// import { ElLoading } from 'element-plus'
 import { waterfallsFlow } from '@/utils/waterfalls'
+import { getAssetsFile } from '@/utils/tools'
 const state = reactive({
 	htmlData: [
 		{
@@ -136,12 +137,15 @@ const state = reactive({
 		}
 	]
 })
-function getAssetsImages(name: string) {
-	return new URL(
-		`${import.meta.env.BASE_URL}src/assets/htmls/${name || 'default'}.png`,
-		import.meta.url
-	).href
-}
+// function getAssetsImages(name: string) {
+// 	console.log(
+// 		'🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ~ import.meta.env.BASE_URL',
+// 		import.meta.env,
+// 		import.meta.url
+// 	)
+// 	return new URL(`../../assets/htmls/${name || 'default'}.png`, import.meta.url)
+// 		.href
+// }
 function jump(url: string) {
 	window.open(url, '_blank')
 }
@@ -171,7 +175,6 @@ onUnmounted(() => {
 		}
 	})
 })
-
 const { htmlData } = toRefs(state)
 </script>
 

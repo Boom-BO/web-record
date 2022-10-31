@@ -4,7 +4,7 @@ import {
 	createWebHistory
 } from 'vue-router'
 const router = createRouter({
-	history: createWebHistory(),
+	history: createWebHistory('/web-record/'),
 	// history: createWebHashHistory(),
 	routes: [
 		{
