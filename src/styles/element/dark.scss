@@ -1,0 +1,14 @@
+// only scss variables
+
+$--colors: (
+	'primary': (
+		'base': #589ef8
+	),
+	'warning': (
+		'base': #d5ac90
+	)
+);
+
+@forward 'element-plus/theme-chalk/src/dark/var.scss' with (
+	$colors: $--colors
+);
