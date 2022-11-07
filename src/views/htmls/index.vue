@@ -134,6 +134,20 @@ const state = reactive({
 			name: '大数据资源服务平台',
 			img: '@/assets/htmls/大数据资源服务平台.png',
 			description: '纯css做的3D动画效果展示相关数据'
+		},
+		{
+			url: 'http://ework.qdu.edu.cn',
+			name: '青岛大学线上服务大厅',
+			img: '@/assets/htmls/青岛大学线上服务大厅.png',
+			description:
+				'青岛大学线上服务大厅，为大学生、研究生、老师等提供流程发起与审批平台'
+		},
+		{
+			url: 'http://172.50.1.200/catalog-portal',
+			name: '中国邮政数据中台',
+			img: '@/assets/htmls/中国邮政数据中台.png',
+			description:
+				'(内网)维护中国邮政相关单位机构设置人员、角色、维护本单位数据源、开通本单位网络端口、服务发布审批、服务授权，开通访问账号密码'
 		}
 	]
 })
@@ -154,7 +168,11 @@ onMounted(() => {
 	if (htmls) {
 		htmls.style.opacity = '0'
 		setTimeout(() => {
-			waterfallsFlow(htmls, 'app-card', 6)
+			waterfallsFlow(
+				htmls,
+				'app-card',
+				Math.round(document.documentElement.clientWidth / 316)
+			)
 			htmls.style.opacity = '1'
 		}, 500)
 	}
@@ -162,7 +180,11 @@ onMounted(() => {
 	window.addEventListener('resize', () => {
 		debounce(() => {
 			// 增加防抖
-			waterfallsFlow(htmls, 'app-card', 6)
+			waterfallsFlow(
+				htmls,
+				'app-card',
+				Math.round(document.documentElement.clientWidth / 316)
+			)
 		}, 500)()
 	})
 })
@@ -171,7 +193,11 @@ onUnmounted(() => {
 		const htmls: HTMLElement | null = document.getElementById('html')
 		if (htmls) {
 			console.log('removeEventListener')
-			waterfallsFlow(htmls, 'app-card', 6)
+			waterfallsFlow(
+				htmls,
+				'app-card',
+				Math.round(document.documentElement.clientWidth / 316)
+			)
 		}
 	})
 })
