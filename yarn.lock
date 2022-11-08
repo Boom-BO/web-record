@@ -753,6 +753,11 @@ entities@^4.4.0:
   resolved "http://172.50.1.160/entities/-/entities-4.4.0.tgz#97bdaba170339446495e653cfd2db78962900174"
   integrity sha512-oYp7156SP8LkeGD0GF85ad1X9Ai79WtRsZ2gxJqtBuzH+98YUV6jkHEKlZkMbcrjJjIVJNIDP/3WL9wQkoPbWA==
 
+es-module-lexer@^0.10.5:
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.10.5.tgz#06f76d51fa53b1f78e3bd8bb36dd275eda2fdd53"
+  integrity sha512-+7IwY/kiGAacQfY+YBhKMvEmyAJnw5grTUgjG85Pe7vcUI/6b7pZjZG8nQ7+48YhzEAEqrEgD2dCz/JIK+AYvw==
+
 esbuild-android-64@0.14.54:
   version "0.14.54"
   resolved "http://172.50.1.160/esbuild-android-64/-/esbuild-android-64-0.14.54.tgz#505f41832884313bbaffb27704b8bcaa2d8616be"
@@ -1890,6 +1895,16 @@ unplugin-auto-import@^0.11.2:
     unimport "^0.6.7"
     unplugin "^0.9.3"
 
+unplugin-element-plus@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/unplugin-element-plus/-/unplugin-element-plus-0.4.1.tgz#73f391377c581a8bf9ddcaf1e23dbfd16a69300e"
+  integrity sha512-x8L35sppkbtnAf+aSPXNsLPjCUrM0mWKgujqMIgrHiDQaGbpMlNnbN2kjP5CMclykNOw8fUCreEhtxPyzg8tmw==
+  dependencies:
+    "@rollup/pluginutils" "^4.2.1"
+    es-module-lexer "^0.10.5"
+    magic-string "^0.26.2"
+    unplugin "^0.7.1"
+
 unplugin-vue-components@^0.19.5:
   version "0.19.9"
   resolved "http://172.50.1.160/unplugin-vue-components/-/unplugin-vue-components-0.19.9.tgz#87e913f3cf8cd1d36c6f5b597ca7a46cddb6229b"
@@ -1906,7 +1921,7 @@ unplugin-vue-components@^0.19.5:
     resolve "^1.22.0"
     unplugin "^0.7.0"
 
-unplugin@^0.7.0:
+unplugin@^0.7.0, unplugin@^0.7.1:
   version "0.7.2"
   resolved "http://172.50.1.160/unplugin/-/unplugin-0.7.2.tgz#4127012fdc2c84ea4ce03ce75e3d4f54ea47bba1"
   integrity sha512-m7thX4jP8l5sETpLdUASoDOGOcHaOVtgNyrYlToyQUvILUtEzEnngRBrHnAX3IKqooJVmXpoa/CwQ/QqzvGaHQ==

@@ -25,10 +25,11 @@
 <script lang="ts" setup>
 import { ref, reactive, toRefs, onMounted, onUnmounted, watch } from 'vue'
 import { debounce } from 'lodash'
-// import { ElLoading } from 'element-plus'
+import { ElLoading } from 'element-plus'
 import { waterfallsFlow } from '@/utils/waterfalls'
 import { getAssetsFile } from '@/utils/tools'
 const preloadCount = ref(0)
+let loading: any = null
 const state = reactive({
 	htmlData: [
 		{
@@ -172,15 +173,6 @@ const state = reactive({
 		}
 	]
 })
-// function getAssetsImages(name: string) {
-// 	console.log(
-// 		'🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ~ import.meta.env.BASE_URL',
-// 		import.meta.env,
-// 		import.meta.url
-// 	)
-// 	return new URL(`../../assets/htmls/${name || 'default'}.png`, import.meta.url)
-// 		.href
-// }
 function jump(url: string) {
 	window.open(url, '_blank')
 }
@@ -203,15 +195,38 @@ watch(preloadCount, val => {
 	const htmls: HTMLElement | null = document.getElementById('html')
 	if (htmls && val === state.htmlData.length) {
 		// 图片预加载完毕
+		console.log('**************************')
+		waterfallsFlowStart()
+		htmls.style.opacity = '1'
+	}
+})
+// 瀑布流绘制
+const waterfallsFlowStart = () => {
+	const htmls: HTMLElement | null = document.getElementById('html')
+	if (htmls) {
+		if (loading) {
+			loading.close()
+		}
+		loading = ElLoading.service({
+			lock: true,
+			text: '正在努力加载作品..',
+			background: 'rgba(0, 0, 0, 0.8)'
+		})
+		// 增加防抖
 		waterfallsFlow(
 			htmls,
 			'app-card',
 			Math.round(document.documentElement.clientWidth / 316)
 		)
-		htmls.style.opacity = '1'
+		loading.close()
 	}
-})
+}
 onMounted(() => {
+	loading = ElLoading.service({
+		lock: true,
+		text: '正在努力加载作品..',
+		background: 'rgba(0, 0, 0, 0.8)'
+	})
 	const htmls: HTMLElement | null = document.getElementById('html')
 	if (htmls) {
 		htmls.style.opacity = '0'
@@ -220,25 +235,13 @@ onMounted(() => {
 	window.addEventListener('resize', () => {
 		debounce(() => {
 			// 增加防抖
-			waterfallsFlow(
-				htmls,
-				'app-card',
-				Math.round(document.documentElement.clientWidth / 316)
-			)
+			waterfallsFlowStart()
 		}, 500)()
 	})
 })
 onUnmounted(() => {
 	window.removeEventListener('resize', () => {
-		const htmls: HTMLElement | null = document.getElementById('html')
-		if (htmls) {
-			console.log('removeEventListener')
-			waterfallsFlow(
-				htmls,
-				'app-card',
-				Math.round(document.documentElement.clientWidth / 316)
-			)
-		}
+		waterfallsFlowStart()
 	})
 })
 const { htmlData } = toRefs(state)

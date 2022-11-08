@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import ElementPlus from 'unplugin-element-plus/vite'
 
 import Unocss from 'unocss/vite'
 import {
@@ -55,6 +56,9 @@ export default defineConfig({
 				})
 			],
 			dts: 'src/components.d.ts'
+		}),
+		ElementPlus({
+			// options
 		}),
 
 		// https://github.com/antfu/unocss
