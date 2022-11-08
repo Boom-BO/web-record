@@ -198,27 +198,19 @@ watch(preloadCount, val => {
 		console.log('**************************')
 		waterfallsFlowStart()
 		htmls.style.opacity = '1'
+		loading.close()
 	}
 })
 // 瀑布流绘制
 const waterfallsFlowStart = () => {
 	const htmls: HTMLElement | null = document.getElementById('html')
 	if (htmls) {
-		if (loading) {
-			loading.close()
-		}
-		loading = ElLoading.service({
-			lock: true,
-			text: '正在努力加载作品..',
-			background: 'rgba(0, 0, 0, 0.8)'
-		})
 		// 增加防抖
 		waterfallsFlow(
 			htmls,
 			'app-card',
 			Math.round(document.documentElement.clientWidth / 316)
 		)
-		loading.close()
 	}
 }
 onMounted(() => {
