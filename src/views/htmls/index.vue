@@ -5,11 +5,15 @@
 			<el-card :body-style="{ padding: '0px' }" @click="jump(item.url)">
 				<div class="image">
 					<img :src="getAssetsFile(`htmls/${item.name || 'default'}.png`)" />
+					<div v-if="item.tag" class="tag">{{ item.tag }}</div>
 				</div>
 				<div class="bottom">
 					<p class="title" :title="item.name">{{ item.name }}</p>
 					<p class="description" :title="item.description">
 						介绍：{{ item.description }}
+					</p>
+					<p class="description" :title="item.description">
+						技术栈：{{ item.description }}
 					</p>
 				</div>
 			</el-card>
@@ -19,19 +23,28 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, toRefs, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, toRefs, onMounted, onUnmounted, watch } from 'vue'
 import { debounce } from 'lodash'
 // import { ElLoading } from 'element-plus'
 import { waterfallsFlow } from '@/utils/waterfalls'
 import { getAssetsFile } from '@/utils/tools'
+const preloadCount = ref(0)
 const state = reactive({
 	htmlData: [
+		{
+			url: 'https://pan.baidu.com/s/1HduWB7DKNJO2MJ0khO1oyQ',
+			name: '其它无线上链接作品或设计图',
+			img: '@/assets/htmls/其它无线上链接作品或设计图.png',
+			description: '其它无线上链接作品和设计图展示（百度云盘）',
+			tag: '云盘'
+		},
 		{
 			url: 'https://events.schneider-electric.cn/innovationsummit',
 			name: '施耐德电气创新峰会',
 			img: '@/assets/htmls/施耐德电气创新峰会.png',
 			description:
-				'2020年世界五百强企业“施耐德”举办电气创新峰会，并邀请各界大咖参加。该网站提供施耐德电气创新峰会与大会日程介绍、大咖介绍、参会报名、创新云展厅入口、巡展日程介绍、线上直播，直播互动、会议重播等功能'
+				'2020年世界五百强企业“施耐德”举办电气创新峰会，并邀请各界大咖参加。该网站提供施耐德电气创新峰会与大会日程介绍、大咖介绍、参会报名、创新云展厅入口、巡展日程介绍、线上直播，直播互动、会议重播等功能',
+			tag: 'PC + H5'
 		},
 		{
 			url: 'http://jd2021.slideabc.com/web',
@@ -57,37 +70,43 @@ const state = reactive({
 			url: 'http://183.95.237.39:8090/html/2%E4%B8%AD%E9%87%91%E6%95%B0%E8%B0%B7%E5%85%A8%E5%9B%BD%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E5%B8%83%E5%B1%80.html',
 			name: '中金数据全国数据中心',
 			img: '@/assets/htmls/中金武汉数谷多媒体展厅.png',
-			description: '”中金武汉数谷多媒体展厅“-中金数据全国数据中心'
+			description: '”中金武汉数谷多媒体展厅“-中金数据全国数据中心',
+			tag: '大屏'
 		},
 		{
 			url: 'http://183.95.237.39:8090/html/3%E4%B8%AD%E9%87%91%E6%95%B0%E8%B0%B7%E5%8C%BA%E4%BD%8D%E4%BC%98%E5%8A%BF.html',
 			name: '中金数谷区位优势',
 			img: '@/assets/htmls/中金武汉数谷多媒体展厅.png',
-			description: '”中金武汉数谷多媒体展厅“-中金数谷区位优势'
+			description: '”中金武汉数谷多媒体展厅“-中金数谷区位优势',
+			tag: '大屏'
 		},
 		{
 			url: 'http://183.95.237.39:8090/html/4%E4%B8%AD%E9%87%91%E6%95%B0%E8%B0%B7%E5%BA%94%E7%94%A8%E4%B8%9A%E5%8A%A1.html',
 			name: '中金数谷应用业务',
 			img: '@/assets/htmls/中金武汉数谷多媒体展厅.png',
-			description: '”中金武汉数谷多媒体展厅“-中金数谷应用业务'
+			description: '”中金武汉数谷多媒体展厅“-中金数谷应用业务',
+			tag: '大屏'
 		},
 		{
 			url: 'http://183.95.237.39:8090/html/6%E6%AD%A6%E6%B1%89%E8%B6%85%E7%AE%97%E4%BA%91.html',
 			name: '武汉超算云',
 			img: '@/assets/htmls/中金武汉数谷多媒体展厅.png',
-			description: '”中金武汉数谷多媒体展厅“-武汉超算云'
+			description: '”中金武汉数谷多媒体展厅“-武汉超算云',
+			tag: '大屏'
 		},
 		{
 			url: 'http://183.95.237.39:8090/html/7.1%E6%AD%A6%E6%B1%89%E7%94%B5%E5%AD%90%E6%94%BF%E5%8A%A1%E4%BA%91.html',
 			name: '武汉电子政务云',
 			img: '@/assets/htmls/中金武汉数谷多媒体展厅.png',
-			description: '”中金武汉数谷多媒体展厅“-武汉电子政务云'
+			description: '”中金武汉数谷多媒体展厅“-武汉电子政务云',
+			tag: '大屏'
 		},
 		{
 			url: 'http://183.95.237.39:8090/html/8%E6%99%BA%E6%85%A7%E5%9F%8E%E5%B8%82%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html',
 			name: '智慧城市解决方案',
 			img: '@/assets/htmls/中金武汉数谷多媒体展厅.png',
-			description: '”中金武汉数谷多媒体展厅“-智慧城市解决方案'
+			description: '”中金武汉数谷多媒体展厅“-智慧城市解决方案',
+			tag: '大屏'
 		},
 		{
 			url: 'https://future.feishu.cn/exhibition',
@@ -120,7 +139,8 @@ const state = reactive({
 			name: '项目主题驾驶舱',
 			img: '@/assets/htmls/项目主题驾驶舱.png',
 			description:
-				'项目主题驾驶舱可视化大屏，包含地图数据动态展示，各种图表类型数据展示'
+				'项目主题驾驶舱可视化大屏，包含地图数据动态展示，各种图表类型数据展示',
+			tag: '大屏'
 		},
 		{
 			url: 'https://boom-bo.github.io/web_accumulation/code/visualize/%E5%B8%A6threejs%E7%9A%84%E5%A4%A7%E5%B1%8F/index.html',
@@ -133,7 +153,8 @@ const state = reactive({
 			url: 'https://boom-bo.github.io/web_accumulation/code/visualize/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%A4%A7%E5%B1%8F/directory_chain.html',
 			name: '大数据资源服务平台',
 			img: '@/assets/htmls/大数据资源服务平台.png',
-			description: '纯css做的3D动画效果展示相关数据'
+			description: '纯css做的3D动画效果展示相关数据',
+			tag: '大屏'
 		},
 		{
 			url: 'http://ework.qdu.edu.cn',
@@ -163,18 +184,37 @@ const state = reactive({
 function jump(url: string) {
 	window.open(url, '_blank')
 }
+const preload = (arr: string[]) => {
+	arr.map(img => {
+		let image = new Image()
+		image.src = img
+		image.onload = () => {
+			preloadCount.value++
+		}
+	})
+}
+// 预加载
+preload(
+	state.htmlData.map(item =>
+		getAssetsFile(`htmls/${item.name || 'default'}.png`)
+	)
+)
+watch(preloadCount, val => {
+	const htmls: HTMLElement | null = document.getElementById('html')
+	if (htmls && val === state.htmlData.length) {
+		// 图片预加载完毕
+		waterfallsFlow(
+			htmls,
+			'app-card',
+			Math.round(document.documentElement.clientWidth / 316)
+		)
+		htmls.style.opacity = '1'
+	}
+})
 onMounted(() => {
 	const htmls: HTMLElement | null = document.getElementById('html')
 	if (htmls) {
 		htmls.style.opacity = '0'
-		setTimeout(() => {
-			waterfallsFlow(
-				htmls,
-				'app-card',
-				Math.round(document.documentElement.clientWidth / 316)
-			)
-			htmls.style.opacity = '1'
-		}, 500)
 	}
 	// 增加窗口变化监听
 	window.addEventListener('resize', () => {
@@ -223,6 +263,7 @@ const { htmlData } = toRefs(state)
 		}
 	}
 	.image {
+		position: relative;
 		width: 100%;
 		height: auto;
 		overflow: hidden;
@@ -232,6 +273,16 @@ const { htmlData } = toRefs(state)
 			height: 100%;
 			transform: scale(1.1);
 			transition: all 0.5s;
+		}
+		.tag {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			padding: 3px 10px;
+			font-size: 12px;
+			font-weight: 500;
+			color: #fff;
+			background-color: #3fcc5b;
 		}
 	}
 	.bottom {
