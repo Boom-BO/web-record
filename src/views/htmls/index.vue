@@ -223,7 +223,7 @@ onMounted(() => {
 	if (htmls) {
 		htmls.style.opacity = '0'
 	}
-	// 增加窗口变化监听
+	// 窗口变化监听
 	window.addEventListener('resize', () => {
 		debounce(() => {
 			// 增加防抖

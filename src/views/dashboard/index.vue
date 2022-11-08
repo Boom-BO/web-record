@@ -2,9 +2,9 @@
 	<div class="dashboard">
 		<canvas class="bg"></canvas>
 		<div class="content">
-			<p class="author">BommMax - Wu Bo</p>
-			<p class="saying">
-				你患得患失，太在意从前，又太担心将来。有句话说的好，昨天是段历史，明天是个谜团，而今天是天赐的礼物，像珍惜礼物那样珍惜今天
+			<p class="author">{{ author }}</p>
+			<p class="maxim">
+				{{ maxim }}
 			</p>
 			<a
 				href="https://boom-bo.github.io/web_accumulation"
@@ -30,8 +30,9 @@
 </template>
 <script lang="ts" setup>
 import { reactive, toRefs, onMounted } from 'vue'
-
 const state = reactive({
+	author: 'BommMax - Wu Bo',
+	maxim: '少年与爱永不老去，即便披荆斩棘，丢失怒马鲜衣。——莫峻',
 	circleUrl:
 		'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
 	squareUrl:
@@ -97,7 +98,7 @@ function bgInit() {
 onMounted(() => {
 	bgInit()
 })
-const { circleUrl, squareUrl, sizeList } = toRefs(state)
+const { author, maxim, circleUrl, squareUrl, sizeList } = toRefs(state)
 </script>
 
 <style scoped lang="scss">
@@ -124,7 +125,7 @@ const { circleUrl, squareUrl, sizeList } = toRefs(state)
 			font-weight: 500;
 			font-size: 30px;
 		}
-		.saying {
+		.maxim {
 			font-size: 14px;
 			color: #121314;
 		}
