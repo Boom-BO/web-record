@@ -12,9 +12,6 @@
 					<p class="description" :title="item.description">
 						介绍：{{ item.description }}
 					</p>
-					<p class="description" :title="item.description">
-						技术栈：{{ item.description }}
-					</p>
 				</div>
 			</el-card>
 		</div>

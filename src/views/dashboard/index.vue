@@ -32,7 +32,7 @@
 import { reactive, toRefs, onMounted } from 'vue'
 const state = reactive({
 	author: 'BommMax - Wu Bo',
-	maxim: '少年与爱永不老去，即便披荆斩棘，丢失怒马鲜衣。——莫峻',
+	maxim: '少年与爱永不老去，即便披荆斩棘，丢失怒马鲜衣。',
 	circleUrl:
 		'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
 	squareUrl:
@@ -92,7 +92,7 @@ function bgInit() {
 		return t > h || t < 0 ? y(p) : t
 	}
 	document.onclick = i
-	document.ontouchstart = i
+	// document.ontouchstart = i
 	i()
 }
 onMounted(() => {
